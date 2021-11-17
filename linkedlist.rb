@@ -1,5 +1,5 @@
 class LinkedList
-    attr_accessor :head, :tail
+    attr_accessor :head, :tail, :size
     def initialize(head = nil, tail = nil)
         @head = head
         @tail = tail
@@ -24,9 +24,6 @@ class LinkedList
             @size += 1
         end
     end   
-    def size
-        @size
-    end
     def at(index)
         current_node = @head
         if index >= size || @head.nil?
@@ -47,9 +44,11 @@ class LinkedList
         elsif size == 1
             @head = nil
             @tail = nil
+            @size -= 1
         else
             @tail = at(size-2)
             @tail.next_node = nil
+            @size -= 1
         end
         returnedtail
     end
@@ -109,6 +108,10 @@ list.append('3')
 # list.prepend('hello')
 p list.pop
 p list.at(1)
+list.pop
+list.pop
+list.pop
+p list.size
 # list.pop
 #p list.head
 #p list.tail
