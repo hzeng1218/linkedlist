@@ -3,6 +3,7 @@ class LinkedList
     def initialize(head = nil, tail = nil)
         @head = head
         @tail = tail
+        @size = 0
     end
     def append(value)
         if @tail.nil?
@@ -12,6 +13,7 @@ class LinkedList
             @tail.next_node = Node.new(value)
             @tail = @tail.next_node
         end
+        @size += 1
     end
     def prepend(value)
         if @head == @tail
@@ -19,39 +21,37 @@ class LinkedList
         else
             @head.next_node = Node.new(value)
             @head = @head.next_node
+            @size += 1
         end
     end   
     def size
-        counter = 0
-        current_node = @head
-        until current_node.nil?
-            counter += 1
-            current_node = current_node.next_node
-        end
-        counter
+        @size
     end
     def at(index)
         current_node = @head
-        if index >= size && @head.nil?
+        if index >= size || @head.nil?
             return nil
         end
         index.times do
+            #p "hello"
             current_node = current_node.next_node
+            #p current_node
         end
+        # p current_node
         current_node
     end
     def pop
-        unless @head == nil
-            if @tail.nil?
-                return nil
-            end
-            if @head == @tail && size == 1
-                @head = nil
-                @tail = nil
-            end
+        returnedtail = @tail
+        if size == 0
+            nil
+        elsif size == 1
+            @head = nil
+            @tail = nil
+        else
             @tail = at(size-2)
             @tail.next_node = nil
         end
+        returnedtail
     end
     def contains?(value)
         current_node = @head
@@ -87,7 +87,6 @@ class LinkedList
             string += "( #{current_node.value} ) -> "
             current_node = current_node.next_node
             end
-        end
         string += 'nil'
     end
 end
@@ -101,9 +100,16 @@ class Node
 end
 
 list = LinkedList.new()
-list.append('hello')
-list.prepend('hello')
-p list.head
-p list.tail
-p list.size
-p list.to_s
+list.append('1')
+list.append('2')
+list.append('3')
+# list.prepend('hello')
+# list.prepend('hello')
+# list.prepend('hello')
+# list.prepend('hello')
+p list.pop
+p list.at(1)
+# list.pop
+#p list.head
+#p list.tail
+#p list.size
